@@ -240,13 +240,13 @@ footer.exportbar .hint{font-size:.75rem; color:var(--grey); align-self:center;}
 </p>
 
 <script>
-  // Replace 'my-github-page' with a unique name for your site
-  const siteKey = 'eng1'; 
-  
-  fetch(`https://countapi.xyz{siteKey}/visits`)
+  const namespace = 'kpmanson'; 
+  const key = 'github-io-page';
+
+  fetch(`https://counterapi.dev{namespace}/${key}/up`)
     .then(res => res.json())
     .then(res => {
-      document.getElementById('visits').innerText = res.value;
+      document.getElementById('visits').innerText = res.count; 
     })
     .catch(() => {
       document.getElementById('visits').innerText = "1";
