@@ -226,7 +226,7 @@ footer.exportbar .hint{font-size:.75rem; color:var(--grey); align-self:center;}
 </header>
 <main id="app"></main>
 <footer class="exportbar">
-  <span class="hint">📱 Your progress saves automatically on this device.<span class="zhhelp">進度會自動儲存在此裝置。完成後按「匯出」交給老師。</span></span>
+  <span class="hint">📱 Your progress saves automatically on this device. <span class="zhhelp">進度會自動儲存在此裝置。</span></span>
   <button class="btn btn-ghost btn-sm" onclick="openBadges()">🏅 Badges</button>
   <button class="btn btn-red btn-sm" onclick="exportWork()">📤 Export 匯出</button>
 </footer>
@@ -3453,38 +3453,6 @@ function refreshHome(){
   const {cur,next}=levelFor(STATE.points); const pct=next?Math.min(100,Math.round((STATE.points-cur[0])/(next[0]-cur[0])*100)):100;
   const ico=document.getElementById("homeLvlIco"), nm=document.getElementById("homeLvlName"), bar=document.getElementById("homeLvlBar"), nx=document.getElementById("homeLvlNext"), bc=document.getElementById("homeBadgeCount");
   if(ico){ ico.textContent=cur[1].split(" ")[0]; nm.textContent=cur[1].split(" ").slice(1).join(" ")+" · "+STATE.points+" pts"; bar.style.width=pct+"%"; nx.textContent=next?`${next[0]-STATE.points} pts to ${next[1]}`:"Top level reached 👑"; bc.textContent="🏅 "+STATE.badges.length; }
-}
-
-/* ================= EXPORT ================= */
-function onNameInput(){ STATE.name=document.getElementById("stuName").value; save(); }
-function exportWork(){
-  const name=STATE.name.trim()||"(no name)";
-  const today=new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
-  let out="";
-  out+="==============================================\n";
-  out+=" TED TALK SUMMER ENGLISH LAB — MY WORK\n";
-  out+=" Student: "+name+"\n Exported: "+today+"\n";
-  out+=` Points: ${STATE.points}   Level: ${levelFor(STATE.points).cur[1]}   Badges: ${STATE.badges.length}/${BADGES.length}\n`;
-  out+=" Badges unlocked: "+(STATE.badges.map(b=>BADGE_MAP[b].ico+BADGE_MAP[b].name).join("  ")||"(none yet)")+"\n";
-  out+="==============================================\n";
-  TALKS.forEach((t,i)=>{
-    const view=document.getElementById("view-"+i);
-    out+=`\n\n########## TALK ${i+1}: ${t.titleEn} ##########\n`;
-    const done=STEP_KEYS.filter(s=>STATE.checks["done-"+i+"-"+s]);
-    out+="Steps completed: "+(done.length?done.join(", "):"none marked")+` (${done.length}/6)\n`;
-    const qs=[...view.querySelectorAll(".q[data-label]")]; const answered=qs.filter(q=>q.dataset.answered==="1");
-    if(answered.length){ const right=answered.filter(q=>q.dataset.result==="correct").length; out+=`Quiz answered: ${answered.length}/${qs.length}, correct: ${right}\n`; }
-    view.querySelectorAll("[id^='gf-'][data-label]").forEach(g=>{ if(+g.dataset.ok>0) out+=`${g.dataset.label}: ${g.dataset.ok}/${g.dataset.total} correct\n`; });
-    const m=document.getElementById("match-"+i); if(m&&+m.dataset.ok>0) out+=`Vocab matching: ${m.dataset.ok}/${m.dataset.total} correct\n`;
-    view.querySelectorAll("input[data-cl]").forEach(c=>{ if(c.checked) out+="✔ "+c.dataset.cl+"\n"; });
-    view.querySelectorAll("textarea[data-label]").forEach(ta=>{ if(ta.value.trim()) out+="\n--- "+ta.dataset.label+" ---\n"+ta.value.trim()+"\n"; });
-  });
-  out+="\n\n(End of export — TED Talk Summer English Lab)\n";
-  const blob=new Blob([out],{type:"text/plain;charset=utf-8"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
-  a.download=`TED_Summer_Work_${name.replace(/[^\w一-鿿-]+/g,"_")}.txt`;
-  document.body.appendChild(a); a.click(); a.remove();
-  toast("✅ Work downloaded! Send it to your teacher.");
 }
 
 /* ================= RESTORE ================= */
