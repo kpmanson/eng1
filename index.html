@@ -235,6 +235,24 @@ footer.exportbar .hint{font-size:.75rem; color:var(--grey); align-self:center;}
 <footer class="exportbar">
   <span class="hint">📱 Your progress saves automatically on this device.<span class="zhhelp">進度會自動儲存在此裝置。</span></span>
   <button class="btn btn-ghost btn-sm" onclick="openBadges()">🏅 Badges</button>
+  <p style="text-align: center; font-family: sans-serif; color: #555;">
+  Page Views: <span id="visits">...</span>
+</p>
+
+<script>
+  // Replace 'my-github-page' with a unique name for your site
+  const siteKey = 'eng1'; 
+  
+  fetch(`https://countapi.xyz{siteKey}/visits`)
+    .then(res => res.json())
+    .then(res => {
+      document.getElementById('visits').innerText = res.value;
+    })
+    .catch(() => {
+      document.getElementById('visits').innerText = "1";
+    });
+</script>
+
 </footer>
 <div class="toast-wrap" id="toasts"></div>
 <div class="overlay" id="badgeOverlay" onclick="if(event.target===this)closeBadges()"></div>
