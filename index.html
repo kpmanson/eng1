@@ -212,6 +212,9 @@ footer.exportbar .hint{font-size:.75rem; color:var(--grey); align-self:center;}
 <body>
 <header class="top">
   <div class="logo" onclick="goHome()">TED<span>暑期英語 Lab</span></div>
+  <div class="namebox">
+    <input id="stuName" placeholder="Name 姓名" oninput="onNameInput()"/>
+  </div>
   <div class="hud">
     <button class="zhtoggle" id="zhToggle" onclick="toggleZh()">中文提示：<b>開 ON</b></button>
     <div class="hud-chip" onclick="openBadges()">
@@ -3071,8 +3074,6 @@ function buildHome(){
       <div class="step-chip"><b>6 · 🚀 Challenge</b>For the brave</div>
     </div>
   </div>`));
-
-  <div class="namebox"><input id="stuName" placeholder="Name 姓名" oninput="onNameInput()"/></div>
 
   home.appendChild(el(`<h2 class="sec">My rewards 🏅<span class="zhhelp" style="font-size:1rem;margin-left:6px">我的獎勵</span></h2>`));
   home.appendChild(el(`
