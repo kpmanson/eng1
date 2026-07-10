@@ -235,23 +235,7 @@ footer.exportbar .hint{font-size:.75rem; color:var(--grey); align-self:center;}
 <footer class="exportbar">
   <span class="hint">📱 Your progress saves automatically on this device.<span class="zhhelp">進度會自動儲存在此裝置。</span></span>
   <button class="btn btn-ghost btn-sm" onclick="openBadges()">🏅 Badges</button>
-  <p style="text-align: right; font-family: sans-serif; color: #FFF;">
-  Page Views: <span id="visits">...</span>
-</p>
 
-<script>
-  const namespace = 'kpmanson'; 
-  const key = 'github-io-page';
-
-  fetch(`https://counterapi.dev{namespace}/${key}/up`)
-    .then(res => res.json())
-    .then(res => {
-      document.getElementById('visits').innerText = res.count; 
-    })
-    .catch(() => {
-      document.getElementById('visits').innerText = "1";
-    });
-</script>
 <script data-goatcounter="https://kpkp.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 
